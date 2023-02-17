@@ -51,8 +51,13 @@ class ProductosController {
     */
 
     @GetMapping("/{prod}")
-    fun getProducto(@PathVariable prod: String): String {
-        return productosService.getProducto(prod)
+    fun getOneProduct(@PathVariable prod: String): ResponseEntity<String> {
+        if (prod.isEmpty()) {
+            return ResponseEntity<String>("Producto vacio", HttpStatus.BAD_REQUEST)
+        }
+        var producto: String = productosService.getProducto(prod)
+        //producto.uppercase() :? ResponseEntity<String>("No existe el producto", HttpStatus.NOT_FOUND)
+        return ResponseEntity<String>(producto, HttpStatus.OK)
     }
 
     @PostMapping("/{prod}")
