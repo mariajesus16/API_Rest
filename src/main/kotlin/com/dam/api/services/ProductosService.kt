@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service
 @Service
 class ProductosService {
 
-    private var listaProductos: MutableList<String> = mutableListOf("cerveza", "agua", "cafe")
-
     @Autowired
     lateinit var productosRepository: ProductosRepository
 
