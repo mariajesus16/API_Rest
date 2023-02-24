@@ -41,6 +41,7 @@ class ProductosService {
     }
 
     fun updateProduct(prod: Producto): Producto {
+        dao.findByIdOrNull(prod.id)
         return dao.save(prod)
     }
 }
