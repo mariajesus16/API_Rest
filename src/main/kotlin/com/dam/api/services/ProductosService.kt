@@ -1,27 +1,46 @@
 package com.dam.api.services
 
+import com.dam.api.models.Producto
+import com.dam.api.repositories.ProductosRepository
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.repository.CrudRepository
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
-import org.springframework.web.bind.annotation.CrossOrigin
 
 @Service
 class ProductosService {
 
     private var listaProductos: MutableList<String> = mutableListOf("cerveza", "agua", "cafe")
 
-    fun getAll(): MutableList<String> {
-        return listaProductos
+    @Autowired
+    lateinit var productosRepository: ProductosRepository
+
+    val dao: CrudRepository<Producto, Long>
+        get() {
+            return productosRepository
+        }
+
+    fun getAll(): MutableList<Producto> {
+        // definimos la lista que vamos a devolver
+        val returnList: MutableList<Producto> = mutableListOf()
+        dao.findAll().forEach { obj: Producto -> returnList.add(obj) }
+        return returnList
     }
 
-    fun getProducto(prod: String): String {
-        val listProducto = listOf("cafe", "agua", "cerveza")
-        var producto = ""
-        for (element in listProducto) {
-            if (prod == element) {
-                producto = prod
-            } else {
-                producto = "Error 404"
-            }
-        }
-        return producto
+    fun getOneProduct(id: Long): Producto? {
+        return dao.findByIdOrNull(id)
+    }
+
+    fun insertOneProduct(prod: Producto): Producto {
+        return dao.save(prod)
+    }
+
+    fun deleteOneProduct(id: Long): Producto? {
+        dao.deleteById(id)
+        return dao.findByIdOrNull(id)
+    }
+
+    fun updateProduct(prod: Producto): Producto {
+        return dao.save(prod)
     }
 }
