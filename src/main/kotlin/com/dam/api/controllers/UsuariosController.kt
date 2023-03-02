@@ -1,6 +1,7 @@
 package com.dam.api.controllers
 
 import com.dam.api.models.Producto
+import com.dam.api.models.Usuario
 import com.dam.api.services.ProductosService
 import com.dam.api.services.UsuariosService
 import org.springframework.beans.factory.annotation.Autowired
@@ -18,39 +19,39 @@ class UsuariosController {
 
     // URL -> /api/v1/productos/
     @GetMapping("/")
-    fun getAll(): ResponseEntity<MutableList<Producto>> {
-        val listaProductos: MutableList<Producto> = productosService.getAll()
-        return ResponseEntity(listaProductos, HttpStatus.OK)
+    fun getAll(): ResponseEntity<MutableList<Usuario>> {
+        val listaUsuarios: MutableList<Usuario> = usuariosService.getAll()
+        return ResponseEntity(listaUsuarios, HttpStatus.OK)
     }
 
     @GetMapping("/{id}")
-    fun getOneProduct(@PathVariable id: String): ResponseEntity<Producto> {
-        val idProd: Long = id.toLong()
-        val producto: Producto? = productosService.getOneProduct(idProd)
+    fun getOneUser(@PathVariable id: String): ResponseEntity<Usuario> {
+        val idUser: Long = id.toLong()
+        val usuario: Usuario? = usuariosService.getOneUser(idUser)
 
-        return ResponseEntity<Producto>(producto, HttpStatus.OK)
+        return ResponseEntity<Usuario>(usuario, HttpStatus.OK)
     }
 
     @PostMapping("/")
-    fun insertProducto(@RequestBody prod: Producto): ResponseEntity<String> {
-        println("ID: ${prod.id}")
-        println("Nombre: ${prod.nombre}")
-        productosService.insertOneProduct(prod)
+    fun insertUsuario(@RequestBody user: Usuario): ResponseEntity<String> {
+        println("ID: ${user.id}")
+        println("Nombre: ${user.nombre}")
+        usuariosService.insertOneUser(user)
 
         return ResponseEntity<String>("IMPLEMENTED", HttpStatus.OK)
     }
 
     @DeleteMapping("/{id}")
-    fun deleteOneProduct(@PathVariable id: String): ResponseEntity<String> {
-        val idProd: Long = id.toLong()
-        productosService.deleteOneProduct(idProd)
+    fun deleteOneUsuario(@PathVariable id: String): ResponseEntity<String> {
+        val idUser: Long = id.toLong()
+        usuariosService.deleteOneUser(idUser)
 
         return ResponseEntity<String>("DELETED", HttpStatus.OK)
     }
 
     @PutMapping("/{id}")
-    fun updateProduct(@RequestBody prod: Producto): ResponseEntity<String> {
-        productosService.updateProduct(prod)
+    fun updateUsuario(@RequestBody user: Usuario): ResponseEntity<String> {
+        usuariosService.updateUser(user)
         return ResponseEntity<String>("UPDATED", HttpStatus.OK)
     }
 }
