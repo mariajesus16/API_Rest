@@ -21,14 +21,15 @@ class UserController {
     }
 
     @GetMapping("/{nick}")
-    fun getOneUser(@PathVariable nick: String): ResponseEntity<User> {
-        val idProd: Long = nick.toLong()
-        val user: User? = userService.getOneUser(idProd)
+    fun getOneUser(@PathVariable nick: String): ResponseEntity<Any> {
+        val user: User? = userService.getOneUserbyNick(nick)
 
-        return ResponseEntity<User>(user, HttpStatus.OK)
+        return if (user == null) {
+            ResponseEntity<Any>("USER NOT FOUND", HttpStatus.NOT_FOUND)
+        } else return ResponseEntity<Any>(user, HttpStatus.OK)
     }
 
-    @PostMapping("")
+    @PostMapping("/")
     fun insertUser(@RequestBody user: User): ResponseEntity<String> {
         userService.insertOneUser(user)
 
@@ -36,16 +37,21 @@ class UserController {
     }
 
     @DeleteMapping("/{nick}")
-    fun deleteOneUser(@PathVariable id: String): ResponseEntity<String> {
-        val idProd: Long = id.toLong()
-        userService.deleteOneUser(idProd)
+    fun deleteOneUser(@PathVariable nick: String): Any? {
+        val user: User? = userService.getOneUserbyNick(nick)
+        val idUser = user?.id
 
-        return ResponseEntity<String>("DELETED", HttpStatus.OK)
+        return if (user != null) {
+            userService.deleteOneUser(idUser!!)
+        } else return ResponseEntity<String>("USER NOT FOUND", HttpStatus.NOT_FOUND)
     }
 
     @PutMapping("/{nick}")
-    fun updateUser(@RequestBody user: User): ResponseEntity<String> {
-        userService.updateUser(user)
-        return ResponseEntity<String>("UPDATED", HttpStatus.OK)
+    fun updateUser(@PathVariable nick: String, @RequestBody updateUser: User): Any {
+        val user: User? = userService.getOneUserbyNick(nick)
+
+        return if (user != null) {
+            userService.updateUser(updateUser)
+        } else return ResponseEntity<String>("USER NOT FOUND", HttpStatus.NOT_FOUND)
     }
 }

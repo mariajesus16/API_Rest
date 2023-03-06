@@ -40,4 +40,15 @@ class UserService {
         dao.findByIdOrNull(user.id)
         return dao.save(user)
     }
+
+    fun getOneUserbyNick(nick: String): User? {
+        val listaUser = this.getAll()
+        var idUser: Long = 0
+
+        if (listaUser != null) {
+            for (user in listaUser) if (user.nick == nick) idUser = user.id
+        }
+
+        return this.getOneUser(idUser)
+    }
 }
