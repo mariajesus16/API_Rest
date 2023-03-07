@@ -14,7 +14,7 @@ class UserController {
     @Autowired
     lateinit var userService: UserService
 
-    @GetMapping("")
+    @GetMapping("/")
     fun getAll(): ResponseEntity<MutableList<User>> {
         val listaUsers: MutableList<User> = userService.getAll()
         return ResponseEntity(listaUsers, HttpStatus.OK)

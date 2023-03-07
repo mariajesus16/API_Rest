@@ -1,7 +1,6 @@
 package com.dam.api.controllers
 
 import com.dam.api.models.Movie
-import com.dam.api.models.Usuario
 import com.dam.api.services.MovieService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
