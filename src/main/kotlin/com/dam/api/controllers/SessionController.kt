@@ -24,6 +24,7 @@ class SessionController {
         return ResponseEntity(listaSessiones, HttpStatus.OK)
     }
 
+    //url "/sessions/sincetoday"
     @GetMapping("/sincetoday")
     fun getSinceToday():ResponseEntity<MutableList<Session>> {
         val hoy = LocalDateTime.now()
@@ -51,7 +52,7 @@ class SessionController {
         return ResponseEntity(listaSessionsToday, HttpStatus.OK)
     }
 
-    //url "api/v1/sessions/today"
+    //url "/sessions/today"
     @GetMapping("/today")
     fun getToday():ResponseEntity<MutableList<Session>>{
         val hoy = LocalDateTime.now()
