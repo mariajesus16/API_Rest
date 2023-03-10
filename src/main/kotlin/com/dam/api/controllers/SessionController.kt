@@ -70,4 +70,11 @@ class SessionController {
         }
         return ResponseEntity(listaSessionsToday, HttpStatus.OK)
     }
+
+    @PostMapping("/")
+    fun insertUser(@RequestBody session: Session): ResponseEntity<String> {
+        sessionService.insertOneSession(session)
+
+        return ResponseEntity<String>("IMPLEMENTED", HttpStatus.OK)
+    }
 }

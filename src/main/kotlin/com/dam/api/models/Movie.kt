@@ -17,6 +17,7 @@ class Movie(
         var poster_image: String,
         @Column(name = "screenshot")
         var screenshot: String,
+
         @Column(name = "synopsis")
         var synopsis: String,
 
